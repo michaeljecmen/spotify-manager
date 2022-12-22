@@ -2,8 +2,10 @@
 # run "which python3" in your terminal and
 # replace "/usr/bin/python3" above with the output
 
+from spotify.liked_songs_sliding_window.util.update_rule import get_liked_song_max, get_liked_days_max
+
 from util.spotify import get_spotify
-from util.config import read_config, get_liked_song_max, get_liked_days_max
+from util.config import read_config
 from util.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
 from util.playlist import find_playlist
 from util.debug import set_debug, debug_print
@@ -13,7 +15,7 @@ import sys
 def populate_playlist():
     config = read_config()
     spotify = get_spotify(config)
-    playlist = find_playlist(config, spotify, config["SPOTIFY_SLIDING_PLAYLIST"])
+    playlist = find_playlist(config, spotify, config["LIKED_SONGS_SLIDING_WINDOW"]["SPOTIFY_SLIDING_PLAYLIST"])
     
     # songs we add initially depends on the update rule chosen by the user
     num = get_liked_song_max(config)

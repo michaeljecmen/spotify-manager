@@ -2,7 +2,9 @@
 # run "which python3" in your terminal and
 # replace "/usr/bin/python3" above with the output
 
-from util.config import read_config, get_liked_days_max, get_liked_song_max
+from spotify.liked_songs_sliding_window.util.update_rule import get_liked_song_max, get_liked_days_max
+
+from util.config import read_config
 from util.spotify import get_spotify
 from util.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
 from util.debug import set_debug, debug_print
@@ -95,7 +97,7 @@ def update_main():
     spotify = get_spotify(config)
 
     # get tracklist for sliding by least recent
-    sliding_tracklist, sliding_playlist_id = get_tracklist(config, spotify, config["SPOTIFY_SLIDING_PLAYLIST"])
+    sliding_tracklist, sliding_playlist_id = get_tracklist(config, spotify, config["LIKED_SONGS_SLIDING_WINDOW"]["SPOTIFY_SLIDING_PLAYLIST"])
 
     num = get_liked_song_max(config)
     if num is not None:

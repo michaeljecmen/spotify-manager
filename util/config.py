@@ -36,15 +36,3 @@ def write_config(config):
     with open(get_absolute_spotify_repo_path() + "config/config.json", "w") as cfile:
         json.dump(config, cfile, indent=4)
 
-# return none if wrong mode
-def get_liked_song_max(config):
-    if "MAINTAIN_NUM_SONGS" in config["UPDATE_RULE"]:
-        return config["UPDATE_RULE"]["MAINTAIN_NUM_SONGS"]
-
-    return None
-
-def get_liked_days_max(config):
-    if "MAINTAIN_NUM_DAYS" in config["UPDATE_RULE"]:
-        return config["UPDATE_RULE"]["MAINTAIN_NUM_DAYS"]
-
-    return None
