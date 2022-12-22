@@ -1,5 +1,5 @@
 from datetime import datetime
-from util.print import debug_print
+from util.debug import debug_print
 
 # return list of previous n liked songs, sorted with newest first
 def get_previous_n_liked_songs(spotify, n):
