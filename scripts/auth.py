@@ -1,7 +1,7 @@
 import os
 import json
 import spotipy
-from util.config import read_config, write_config, get_absolute_rolling_songs_dir
+from util.config import read_config, write_config, get_absolute_spotify_repo_path
 
 TEMP_CACHE_FILENAME = ".temp-token-cache"
 
@@ -11,7 +11,7 @@ def get_and_cache_spotify_token():
     # this will require you to sign in with a web browser
     # and hit "allow access" for this app on your spotify account
     config = read_config()
-    temp_cache_file = get_absolute_rolling_songs_dir() + TEMP_CACHE_FILENAME
+    temp_cache_file = get_absolute_spotify_repo_path() + TEMP_CACHE_FILENAME
     spotipy.util.prompt_for_user_token(
         config["SPOTIFY_USERNAME"],
         "user-library-read playlist-modify-public",

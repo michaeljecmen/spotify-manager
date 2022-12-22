@@ -2,7 +2,7 @@ import os
 import json
 
 from util.date import get_date
-from util.config import get_absolute_rolling_songs_dir
+from util.config import get_absolute_spotify_repo_path
 
 def truncate_utf8_chars(filename, count, ignore_newlines=True):
     """
@@ -40,7 +40,7 @@ def truncate_utf8_chars(filename, count, ignore_newlines=True):
 
 def append_to_log(config, removed, added, logfilepath=""):
     if logfilepath == "":
-        logfilepath = get_absolute_rolling_songs_dir() + config["DATA_DIR"] + config["LOG_FILENAME"]
+        logfilepath = get_absolute_spotify_repo_path() + config["DATA_DIR"] + config["LOG_FILENAME"]
     # no appending needed if no tracks were removed
     if len(removed) == 0:
         return False

@@ -9,6 +9,6 @@ __pycache__
 .cache-*
 
 # for rolling-songs, do not commit data files
-rolling-songs/data/
+data/
 current-tracklist.json
 rolling-log.json
