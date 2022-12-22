@@ -1,6 +1,10 @@
-# debug flag
-debug = False
+DEBUG = False
+
+def set_debug(debug):
+    global DEBUG
+    DEBUG = debug
 
 def debug_print(*args, **kwargs):
-    if debug:
-        print(*args, **kwargs) 
+    if not DEBUG:
+        return
+    print(*args, **kwargs)
