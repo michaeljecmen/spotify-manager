@@ -1,0 +1,31 @@
+{
+    "SPOTIFY_USERNAME": "your_spotify_username",
+    "SPOTIFY_CLIENT_ID":"your_spotify_client_id",
+    "SPOTIFY_CLIENT_SECRET":"your_spotify_client_secret",
+    "SPOTIFY_REDIRECT_URI":"http://localhost:8888/callback",
+    "SPOTIFY_TOKEN": "THE PROGRAM WILL MODIFY THIS",
+    "SENDER_EMAIL": "your_sender_email_address",
+    "SENDER_PASSWORD": "your_sender_email_password",
+
+    "ROLLING_SONGS": {
+        "ENABLED": true,
+        "SPOTIFY_PLAYLIST": "your_spotify_rolling_playlist_name",
+        "SPOTIFY_LOG_PLAYLIST": "your_spotify_rolling_log_playlist_name, blank if none",
+        "LASTFM_USERNAME": "your_lastfm_username",
+        "LASTFM_PASSWORD": "your_lastfm_password",
+        "LASTFM_API_KEY": "your_lastfm_app_api_key",
+        "LASTFM_SECRET": "your_lastfm_app_secret",
+        "DATA_DIR": "data/",
+        "STORAGE_FILENAME": "current-tracklist.json",
+        "LOG_FILENAME": "rolling-log.json",
+        "RECEIVER_EMAIL": "your_receiver_email_address"
+    },
+    "LIKED_SONGS_SLIDING_WINDOW": {
+        "ENABLED": true,
+        "SPOTIFY_SLIDING_PLAYLIST": "your_spotify_sliding_window_playlist_name",
+        "UPDATE_RULE": {
+            "MAINTAIN_NUM_SONGS": 100,
+            "MAINTAIN_NUM_DAYS": 30
+        }
+    }
+}
