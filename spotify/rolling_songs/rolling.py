@@ -6,18 +6,13 @@ import os
 import json
 from pathlib import Path
 
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-
-from util.cache import ConfigCacheHandler
+from util.spotify import get_spotify
 from util.date import get_date, is_ts_before_yesterday
 from util.config import read_config, get_absolute_spotify_repo_path
 from util.gmail import send_gmail
-from util.lastfm import get_lastfm_network
+from util.lastfm import get_lastfm
 from util.log import append_to_log
 from util.debug import debug_print
-        
-# TODO at end of month dump top 10 for the month into timelapse/month-year playlist
 
 def create_data_dir_if_dne(config): # TODO have the daily email dump the filesize
     data_dir_path = get_absolute_spotify_repo_path() + config["ROLLING_SONGS"]["DATA_DIR"]
@@ -25,12 +20,9 @@ def create_data_dir_if_dne(config): # TODO have the daily email dump the filesiz
         os.makedirs(data_dir_path)
 
 def authenticate_services(config):
-    oauth = SpotifyOAuth(client_id=config["SPOTIFY_CLIENT_ID"], client_secret=config["SPOTIFY_CLIENT_SECRET"], redirect_uri=config["SPOTIFY_REDIRECT_URI"], cache_handler=ConfigCacheHandler())
-    spotify = spotipy.Spotify(oauth_manager=oauth)
-
-    network = get_lastfm_network(config)
-    
-    return spotify, network.get_authenticated_user()
+    spotify = get_spotify(config)
+    lastfm = get_lastfm(config)
+    return spotify, lastfm
 
 # given a playlist, returns the full tracklist as a dict of uri->{name artists album}
 def fetch_full_tracklist(spotify, playlist):
@@ -90,6 +82,9 @@ def get_rolling_tracklist(config, spotify):
         
         # now as soon as we find the rolling playlist, we can break
         rolling_found = True
+
+    if not rolling_found:
+        raise NameError(f'Error: could not find playlist with name \"{config["ROLLING_SONGS"]["SPOTIFY_LOG_PLAYLIST"]}\"')
 
     return tracklist, log_tracklist, log_playlist_id
 
@@ -234,7 +229,7 @@ def update_main():
 
     # update the spotify log playlist with the songs that were added
     add_tracks_to_log_playlist(config, spotify, log_playlist_id, added)
-    
+
     # write the tracklist file to be checked next time,
     # creating the data dir if it does not yet exist
     create_data_dir_if_dne(config)
