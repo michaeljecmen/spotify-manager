@@ -13,7 +13,7 @@
         "ENABLED": true,
         "SPOTIFY_PLAYLIST": "your_spotify_rolling_playlist_name",
         "SPOTIFY_LOG_PLAYLIST": "your_spotify_rolling_log_playlist_name, blank if none",
-        "DATA_DIR": "data/",
+        "DATA_DIR": "spotify/rolling_songs/data/",
         "STORAGE_FILENAME": "current-tracklist.json",
         "LOG_FILENAME": "rolling-log.json",
         "RECEIVER_EMAIL": "your_receiver_email_address"

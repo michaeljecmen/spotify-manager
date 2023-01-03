@@ -6,12 +6,13 @@ import os
 import json
 from pathlib import Path
 
+from spotify.rolling_songs.log import append_to_log
+
 from util.spotify import get_spotify
 from util.date import get_date, is_ts_before_yesterday
 from util.config import read_config, get_absolute_spotify_repo_path
 from util.gmail import send_gmail
 from util.lastfm import get_lastfm
-from util.log import append_to_log
 from util.debug import debug_print
 
 def create_data_dir_if_dne(config): # TODO have the daily email dump the filesize
@@ -44,49 +45,43 @@ def fetch_full_tracklist(spotify, playlist):
         
     return tracklist
 
+def get_spotify_playlist_object(spotify, username, playlist_name):
+    offset = 0
+    playlists = { 'next': True }
+    while playlists['next']:
+        playlists = spotify.user_playlists(username, limit=50, offset=offset)
+        offset += len(playlists["items"])
+        for playlist in playlists['items']:
+            debug_print(f'found playlist {playlist["name"]}')
+
+            # defense against taking another user's playlist that you have liked
+            # not sure if this is even possible but why not
+            if playlist['owner']['id'] != username:
+                continue
+
+            # only want to request the playlists once, so need to check
+            # for the log playlist and the rolling playlist here and remember
+            # the log playlist id
+            if playlist['name'] == playlist_name:
+                return playlist
+    
+    # yell if the playlist doesn't exist
+    raise NameError(f'Error: could not find playlist with name \"{playlist_name}\"')
+
 # returns list of { "name": trackname, "artists": [artists], "album": album }
 # containing each song in the spotify playlist provided
 # also returns the tracklist from the log playlist and its playlist id
 def get_rolling_tracklist(config, spotify):
     spotify_username = config["SPOTIFY_USERNAME"]
-    playlists = spotify.user_playlists(spotify_username)
-    tracklist = {}
-    log_tracklist = {}
-    log_playlist_id = ""
-    rolling_found = False
-    for playlist in playlists['items']:
 
-        # defense against taking another user's "rolling" playlist that you have liked
-        # not sure if this is even possible but why not
-        if playlist['owner']['id'] != spotify_username:
-            continue
+    log_playlist = get_spotify_playlist_object(spotify, spotify_username, config["ROLLING_SONGS"]["SPOTIFY_LOG_PLAYLIST"])
+    log_playlist_id = log_playlist['uri']
+    log_tracklist = fetch_full_tracklist(spotify, log_playlist)
 
-        # only want to request the playlists once, so need to check
-        # for the log playlist and the rolling playlist here and remember
-        # the log playlist id
-        if playlist['name'] == config["ROLLING_SONGS"]["SPOTIFY_LOG_PLAYLIST"]:
-            log_playlist_id = playlist['uri']
-            log_tracklist = fetch_full_tracklist(spotify, playlist)
-            
-            # break if we've found both now
-            if rolling_found:
-                break
+    rolling_playlist = get_spotify_playlist_object(spotify, spotify_username, config["ROLLING_SONGS"]["SPOTIFY_PLAYLIST"])
+    rolling_tracklist = fetch_full_tracklist(spotify, rolling_playlist)
 
-        if playlist['name'] == config["ROLLING_SONGS"]["SPOTIFY_PLAYLIST"]:
-            # actually get the songs
-            tracklist = fetch_full_tracklist(spotify, playlist)
-        
-            # break if we've found both now
-            if log_playlist_id != "":
-                break
-        
-        # now as soon as we find the rolling playlist, we can break
-        rolling_found = True
-
-    if not rolling_found:
-        raise NameError(f'Error: could not find playlist with name \"{config["ROLLING_SONGS"]["SPOTIFY_LOG_PLAYLIST"]}\"')
-
-    return tracklist, log_tracklist, log_playlist_id
+    return rolling_tracklist, log_tracklist, log_playlist_id
 
 def file_exists(filename):
     return Path(filename).exists()

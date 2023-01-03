@@ -40,7 +40,7 @@ def truncate_utf8_chars(filename, count, ignore_newlines=True):
 
 def append_to_log(config, removed, added, logfilepath=""):
     if logfilepath == "":
-        logfilepath = get_absolute_spotify_repo_path() + config["DATA_DIR"] + config["LOG_FILENAME"]
+        logfilepath = get_absolute_spotify_repo_path() + config["ROLLING_SONGS"]["DATA_DIR"] + config["ROLLING_SONGS"]["LOG_FILENAME"]
     # no appending needed if no tracks were removed
     if len(removed) == 0:
         return False
