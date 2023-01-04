@@ -36,3 +36,4 @@ the one stop shop for an upgraded spotify experience
 - be able to set the debug / email flag from a spotify playlist description 
 - add every X day email dump with all changes made (each module logs its changes with the email module, which gets run on every X cadence and wipes its data after that)
 - for rolling-songs, generate an html page with the graphs for the year from the python module. could use a very basic templating system or something more complex
+- github actions integration, add testing and ci

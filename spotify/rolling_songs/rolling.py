@@ -1,7 +1,3 @@
-#!/usr/bin/python3
-# run "which python3" in your terminal and
-# replace "/usr/bin/python3" above with the output
-
 import os
 import json
 from pathlib import Path

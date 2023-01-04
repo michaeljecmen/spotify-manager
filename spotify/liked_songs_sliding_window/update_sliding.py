@@ -1,15 +1,9 @@
-#!/usr/bin/python3
-# run "which python3" in your terminal and
-# replace "/usr/bin/python3" above with the output
-
 from spotify.liked_songs_sliding_window.util.update_rule import get_liked_song_max, get_liked_days_max
 
 from util.config import read_config
 from util.spotify import get_spotify
 from util.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
-from util.debug import set_debug, debug_print
-
-import sys
+from util.debug import debug_print
 
 # given a playlist, returns the full tracklist as a list of track ids
 def fetch_full_tracklist(spotify, playlist):
