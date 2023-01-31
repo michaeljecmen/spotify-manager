@@ -9,7 +9,7 @@ the one stop shop for an upgraded spotify experience
 ## usage
 1. make a lastfm account and link it to your spotify (this allows you to track more detailed statistics like playcount. it's also currently required by this manager repo as a whole)
 2. run ```git clone git@github.com:michaeljecmen/spotify-manager.git```
-3. run ```pip3 install spotipy pylast```
+3. run ```pip3 install -r requirements.txt```
 4.  ```cp example.json config.json``` and fill out all of the fields except the ```SPOTIFY_REDIRECT_URI``` and the ```SPOTIFY_TOKEN```
         
     3a. to find your spotify client id and client secret, head over to [the spotify dev dashboard](https://developer.spotify.com/dashboard/), log in, and create an application. 
@@ -29,7 +29,6 @@ the one stop shop for an upgraded spotify experience
 - fill this out (usage with cron via https://stackoverflow.com/questions/8899737/crontab-run-in-directory)
 - account for enabledness of modules with config enabled keys
 - update sub-readmes
-- add auto month generated playlists module
 - add custom tagging system
 - add support for not having lastfm
 - add better error handling and email reporting for that
