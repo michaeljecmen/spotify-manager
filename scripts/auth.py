@@ -14,7 +14,7 @@ def get_and_cache_spotify_token():
     temp_cache_file = get_absolute_spotify_repo_path() + TEMP_CACHE_FILENAME
     spotipy.util.prompt_for_user_token(
         config["SPOTIFY_USERNAME"],
-        "user-library-read playlist-modify-public",
+        "user-library-read playlist-modify-public user-top-read",
         config["SPOTIFY_CLIENT_ID"],
         config["SPOTIFY_CLIENT_SECRET"],
         config["SPOTIFY_REDIRECT_URI"],

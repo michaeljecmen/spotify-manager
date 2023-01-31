@@ -6,7 +6,7 @@ import shutil
 
 from util.config import read_config, get_absolute_spotify_repo_path
 from util.lastfm import get_lastfm_network
-from util.log import append_to_log
+from spotify.rolling_songs.log import append_to_log
 
 # takes the current tracklist and appends
 # the relevant information to the logfile

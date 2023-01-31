@@ -4,7 +4,7 @@ the one stop shop for an upgraded spotify experience
 ## modules
 - __rolling songs__: maintain a playlist of your favorite N songs and this'll keep stats (song -> playcount and duration on favorites list), and a running log playlist (every song that has ever made your favorites list)
 - __liked songs sliding window__: maintains a playlist of your last N days of liked songs, or your last N liked songs (for when your liked songs playlist is too long to shuffle)
-- __monthly top ten__: at the end of every month, automatically creates a playlist of your top ten songs for that month (by playcount)
+- __monthly recap__: at the end of every month, automatically creates a playlist of your top N songs for that month (by playcount)
 
 ## usage
 1. make a lastfm account and link it to your spotify (this allows you to track more detailed statistics like playcount. it's also currently required by this manager repo as a whole)
@@ -40,3 +40,6 @@ the one stop shop for an upgraded spotify experience
 - remove redirect uri from config
 - make config a class and abstract out the keys from users
 - use the github issues tracker instead of this file
+- type annotate everything
+- make custom spotify api calls auto-reauth
+- possibly remove lastfm altogether -- playcounts may be accessible from spotify api now

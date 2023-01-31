@@ -4,7 +4,7 @@ from pathlib import Path
 
 from spotify.rolling_songs.log import append_to_log
 
-from util.spotify import get_spotify
+from util.spotify import get_spotify, get_spotify_playlist_object
 from util.date import get_date, is_ts_before_yesterday
 from util.config import read_config, get_absolute_spotify_repo_path
 from util.gmail import send_gmail
@@ -41,28 +41,6 @@ def fetch_full_tracklist(spotify, playlist):
         
     return tracklist
 
-def get_spotify_playlist_object(spotify, username, playlist_name):
-    offset = 0
-    playlists = { 'next': True }
-    while playlists['next']:
-        playlists = spotify.user_playlists(username, limit=50, offset=offset)
-        offset += len(playlists["items"])
-        for playlist in playlists['items']:
-            debug_print(f'found playlist {playlist["name"]}')
-
-            # defense against taking another user's playlist that you have liked
-            # not sure if this is even possible but why not
-            if playlist['owner']['id'] != username:
-                continue
-
-            # only want to request the playlists once, so need to check
-            # for the log playlist and the rolling playlist here and remember
-            # the log playlist id
-            if playlist['name'] == playlist_name:
-                return playlist
-    
-    # yell if the playlist doesn't exist
-    raise NameError(f'Error: could not find playlist with name \"{playlist_name}\"')
 
 # returns list of { "name": trackname, "artists": [artists], "album": album }
 # containing each song in the spotify playlist provided

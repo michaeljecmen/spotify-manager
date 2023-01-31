@@ -28,6 +28,13 @@
         }
     },
 
+    "MONTHLY_RECAP": {
+        "ENABLED": true,
+        "NUMBER_OF_SONGS": 10,
+        "FOLDER": "",
+        "NAMING_PATTERN": "%B%yRecap"
+    },
+
     "SPOTIFY_REDIRECT_URI":"http://localhost:8888/callback",
     "SPOTIFY_TOKEN": "THE PROGRAM WILL MODIFY THIS"
 }
