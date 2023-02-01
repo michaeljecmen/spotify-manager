@@ -2,7 +2,7 @@ from spotify.liked_songs_sliding_window.util.update_rule import get_liked_song_m
 
 from util.config import read_config
 from util.spotify import get_spotify
-from util.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
+from spotify.liked_songs_sliding_window.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
 from util.debug import debug_print
 
 # given a playlist, returns the full tracklist as a list of track ids
