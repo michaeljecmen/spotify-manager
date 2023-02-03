@@ -42,3 +42,4 @@ the one stop shop for an upgraded spotify experience
 - type annotate everything
 - make custom spotify api calls auto-reauth
 - possibly remove lastfm altogether -- playcounts may be accessible from spotify api now
+- make the album cover of the top song the playlist cover for the monthly_recap generated playlist 
