@@ -41,5 +41,6 @@ the one stop shop for an upgraded spotify experience
 - use the github issues tracker instead of this file
 - type annotate everything
 - make custom spotify api calls auto-reauth
+- for last month liked -- track how long the buffer of last 30 days is over time (how much new music you listened to as a 30 day buffer of minutes). really cool stat to see at the end of the year
 - possibly remove lastfm altogether -- playcounts may be accessible from spotify api now
 - make the album cover of the top song the playlist cover for the monthly_recap generated playlist 
