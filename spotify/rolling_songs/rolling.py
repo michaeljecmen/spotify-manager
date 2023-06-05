@@ -179,8 +179,7 @@ def debug_print_and_email_message(config, subject, content):
         send_gmail(config["SENDER_EMAIL"], config["SENDER_PASSWORD"], config["ROLLING_SONGS"]["RECEIVER_EMAIL"], subject, content)
         debug_print(content)
 
-def update_main():
-    config = read_config()
+def update_rolling_data_and_playlist(config):
     spotify, lastfm = authenticate_services(config)
 
     # get current tracks and compare to previously stored tracks
@@ -210,3 +209,10 @@ def update_main():
 
     # finally, log the message and email it to the user
     # debug_print_and_email_message(config, "your rolling playlist was updated!", message)
+
+def update_main():
+    try:
+        config = read_config()
+        update_rolling_data_and_playlist(config)
+    except Exception as e:
+        debug_print_and_email_message(config, "error in rolling-songs", str(e))
