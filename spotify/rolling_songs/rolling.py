@@ -209,4 +209,4 @@ def update_main():
     append_to_log(config, removed, added)
 
     # finally, log the message and email it to the user
-    debug_print_and_email_message(config, "your rolling playlist was updated!", message)
+    # debug_print_and_email_message(config, "your rolling playlist was updated!", message)
