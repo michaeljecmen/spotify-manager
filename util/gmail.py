@@ -3,6 +3,8 @@ import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from debug import debug_print
+
 def send_gmail(sender, sender_pw, receiver, subject, content):
     """
     Sends a simple text-based email over GMail.
@@ -27,3 +29,8 @@ def send_gmail(sender, sender_pw, receiver, subject, content):
     with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
         server.login(sender, sender_pw)
         server.sendmail(sender, receiver, message.as_string())
+
+def debug_print_and_email_message(config, subject, content):
+    if content != "":
+        send_gmail(config["SENDER_EMAIL"], config["SENDER_PASSWORD"], config["ROLLING_SONGS"]["RECEIVER_EMAIL"], subject, content)
+        debug_print(content)

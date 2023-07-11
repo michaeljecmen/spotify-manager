@@ -17,6 +17,7 @@ cool "better spotify wrapped" graphic or poster or something with the data. if I
 make a template I'll link it here so others can use it too.
 
 ## usage
+*(you may need to run these all with Python 3.10)*
 1. clone this repo with ```git clone git@github.com:michaeljecmen/rolling-songs.git```
 2. run ```pip3 install spotipy pylast```
 3.  ```cp example.json config.json``` and modify all of the fields except the spotify url
@@ -32,8 +33,8 @@ make a template I'll link it here so others can use it too.
     to be clear, modify the fields in ```config.json```, not ```example.json```.
 4. for the app you just created on your spotify dev dashboard, add the url ```http://localhost:8888/callback``` to the list of callbacks using the "edit settings" button. this url should match the url in your ```config.json```, so if you edited that for whatever reason be sure to update your callback list on the dashboard to match.
 5. run ```cd rolling-songs/```, then ```chmod +x rolling.py``` to enter the directory and mark the program as executable (second step not necessary, but makes cron-jobbing the app easier)
-6. run the authenticator script with ```python3 auth.py``` and give the app access to your spotify account when it opens a browser window and yells at you. the program should auto-refresh the token once you generate it for the first time, but if you ever need to reauthenticate the program for some reason re-run ```python3 auth.py```.
-7. run the program once a day (or whenever you make changes to your playlist) with ```python3 rolling.py``` or ```./rolling.py```, or, even better, set up a cron job on a box somewhere.
+6. run the authenticator script with ```python3 -m scripts.auth``` and give the app access to your spotify account when it opens a browser window and yells at you. the program should auto-refresh the token once you generate it for the first time, but if you ever need to reauthenticate the program for some reason re-run ```python3 -m scripts.auth```.
+7. run the program once a day (or whenever you make changes to your playlist) with ```python3 -m rolling_songs.rolling```, or, even better, set up a cron job on a box somewhere.
 8. at the end of the year (or however long you want your cycle of reports to last), run ```python3 finalize.py```. after this, your logfile will be complete, containing all of the information needed to reconstruct the full picture of your playlist's history this cycle.
 
 ## data storage

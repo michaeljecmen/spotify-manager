@@ -1,6 +1,7 @@
 from util.config import read_config
 from util.spotify import get_spotify, get_top_tracks_for_user, get_current_user_id, get_spotify_playlist_object
 from util.debug import debug_print
+from util.gmail import debug_print_and_email_message
 
 import dateutil.relativedelta
 from spotipy import Spotify
@@ -12,8 +13,14 @@ from typing import List
 # because ideally I put this in a folder
 # TODO add cover image support as well
 
-def create_monthly_playlist() -> None:
-    config = read_config()
+def main() -> None:
+    try:
+        config = read_config()
+        create_monthly_playlist(config)
+    except Exception as e:
+        debug_print_and_email_message(config, "error in monthly-recap", str(e))
+
+def create_monthly_playlist(config: dict) -> None:
     spotify = get_spotify(config)
     n = config["MONTHLY_RECAP"]["NUMBER_OF_SONGS"]
 

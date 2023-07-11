@@ -7,7 +7,7 @@ from spotify.rolling_songs.log import append_to_log
 from util.spotify import get_spotify, get_spotify_playlist_object
 from util.date import get_date, is_ts_before_yesterday
 from util.config import read_config, get_absolute_spotify_repo_path
-from util.gmail import send_gmail
+from util.gmail import debug_print_and_email_message
 from util.lastfm import get_lastfm
 from util.debug import debug_print
 
@@ -173,11 +173,6 @@ def create_logfile(config, tracklist):
 def write_tracklist_file(config, tracklist):
     with open(get_absolute_spotify_repo_path() + config["ROLLING_SONGS"]["DATA_DIR"] + config["ROLLING_SONGS"]["STORAGE_FILENAME"], "w") as tfile:
         json.dump(tracklist, tfile, indent=4)
-    
-def debug_print_and_email_message(config, subject, content):
-    if content != "":
-        send_gmail(config["SENDER_EMAIL"], config["SENDER_PASSWORD"], config["ROLLING_SONGS"]["RECEIVER_EMAIL"], subject, content)
-        debug_print(content)
 
 def update_rolling_data_and_playlist(config):
     spotify, lastfm = authenticate_services(config)
