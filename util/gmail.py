@@ -3,7 +3,7 @@ import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from debug import debug_print
+from util.debug import debug_print
 
 def send_gmail(sender, sender_pw, receiver, subject, content):
     """
