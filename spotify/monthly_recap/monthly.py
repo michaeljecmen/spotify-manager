@@ -18,7 +18,8 @@ def main() -> None:
         config = read_config()
         create_monthly_playlist(config)
     except Exception as e:
-        debug_print_and_email_message(config, "error in monthly-recap", str(e))
+        # debug_print_and_email_message(config, "error in monthly-recap", str(e))
+        pass
 
 def create_monthly_playlist(config: dict) -> None:
     spotify = get_spotify(config)

@@ -150,4 +150,5 @@ def update_main() -> None:
         config = read_config()
         update_liked_songs_playlist(config)
     except Exception as e:
-        debug_print_and_email_message(config, "error in liked-songs-sliding-window", str(e))
+        # debug_print_and_email_message(config, "error in liked-songs-sliding-window", str(e))
+        pass

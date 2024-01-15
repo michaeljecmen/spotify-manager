@@ -218,11 +218,12 @@ def update_rolling_data_and_playlist(config):
     append_to_log(config, removed, added)
 
     # finally, log the message and email it to the user
-    debug_print_and_email_message(config, "your rolling playlist was updated!", message)
+    # debug_print_and_email_message(config, "your rolling playlist was updated!", message)
 
 def update_main():
     try:
         config = read_config()
         update_rolling_data_and_playlist(config)
     except Exception as e:
-        debug_print_and_email_message(config, "error in rolling-songs", str(e))
+        # debug_print_and_email_message(config, "error in rolling-songs", str(e))
+        pass
