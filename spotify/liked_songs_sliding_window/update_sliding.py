@@ -9,16 +9,52 @@ from util.gmail import debug_print_and_email_message
 # given a playlist, returns the full tracklist as a list of track ids
 def fetch_full_tracklist(spotify, playlist):
     tracklist = []
-    results = spotify.playlist(playlist['id'], fields="tracks,next")
-    spotify_tracks = results['tracks']
-    while spotify_tracks:
+
+    current_track_offset = 0
+    TRACKS_PER_PAGE = 100
+    spotify_tracks = spotify.playlist_items(playlist['id'], limit=TRACKS_PER_PAGE, offset=current_track_offset)
+
+    while spotify_tracks and spotify_tracks['items']:
         # not quite sure why the for loop is needed here
         for item in spotify_tracks['items']:
             spotify_track = item['track']
             tracklist.append(spotify_track['id'])
             
-        spotify_tracks = spotify.next(spotify_tracks)
+        current_track_offset += TRACKS_PER_PAGE
+        spotify_tracks = spotify.playlist_items(playlist['id'], limit=TRACKS_PER_PAGE, offset=current_track_offset)
         
+    return tracklist
+
+def fetch_full_tracklist(spotify, playlist):
+    tracklist = {}
+
+    # because next no longer works, we have to use playlist_items
+    # instead of this
+    # results = spotify.playlist(playlist['id'], fields="tracks,next")
+    current_track_offset = 0
+    TRACKS_PER_PAGE = 100
+    spotify_tracks = spotify.playlist_items(playlist['id'], limit=TRACKS_PER_PAGE, offset=current_track_offset)
+
+    while spotify_tracks and spotify_tracks['items']:
+        # not quite sure why the for loop is needed here
+        for item in spotify_tracks['items']:
+            spotify_track = item['track']
+            debug_print("fetch_full_tracklist: found track!", spotify_track['name'])
+            tracklist[spotify_track['uri']] = {
+                "name": spotify_track['name'],
+                "artists": [ artist['name'] for artist in spotify_track['artists'] ],
+                "album": spotify_track['album']['name'],
+                "uri": spotify_track['uri'],
+            }
+
+        # as of jan 2024 spotify.next no longer works. neat
+        # spotify_tracks = spotify.next(spotify_tracks)
+        
+        # now we have to do the math ourselves
+        current_track_offset += TRACKS_PER_PAGE
+        spotify_tracks = spotify.playlist_items(playlist['id'], limit=TRACKS_PER_PAGE, offset=current_track_offset)
+    
+    debug_print("fetch_full_tracklist returning:", tracklist)
     return tracklist
 
 # returns list of { "name": trackname, "uri": uri }
