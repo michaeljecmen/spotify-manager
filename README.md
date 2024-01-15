@@ -9,7 +9,7 @@ the one stop shop for an upgraded spotify experience
 ## usage
 1. make a lastfm account and link it to your spotify (this allows you to track more detailed statistics like playcount. it's also currently required by this manager repo as a whole)
 2. run ```git clone git@github.com:michaeljecmen/spotify-manager.git```
-3. run ```pip3 install -r requirements.txt```
+3. run ```python3 -m pip install -r requirements.txt```
 4.  ```cp example.json config.json``` and fill out all of the fields except the ```SPOTIFY_REDIRECT_URI``` and the ```SPOTIFY_TOKEN```
         
     3a. to find your spotify client id and client secret, head over to [the spotify dev dashboard](https://developer.spotify.com/dashboard/), log in, and create an application. 
