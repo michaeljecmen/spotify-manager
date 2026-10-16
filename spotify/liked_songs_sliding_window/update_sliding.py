@@ -1,10 +1,11 @@
+import sys
 from spotify.liked_songs_sliding_window.util.update_rule import get_liked_song_max, get_liked_days_max
 
 from util.config import read_config
 from util.spotify import get_spotify
 from spotify.liked_songs_sliding_window.liked import get_previous_n_liked_songs, get_all_liked_songs_within_last_n_days
 from util.debug import debug_print
-from util.gmail import debug_print_and_email_message
+from util.gmail import debug_print_and_email_message, email_error
 
 # given a playlist, returns the full tracklist as a list of track ids
 def fetch_full_tracklist(spotify, playlist):
@@ -149,6 +150,6 @@ def update_main() -> None:
     try:
         config = read_config()
         update_liked_songs_playlist(config)
-    except Exception as e:
-        # debug_print_and_email_message(config, "error in liked-songs-sliding-window", str(e))
-        pass
+    except Exception:
+        email_error("liked-songs-sliding-window")
+        sys.exit(1)
