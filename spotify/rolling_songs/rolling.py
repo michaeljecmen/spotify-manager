@@ -11,6 +11,7 @@ from util.config import read_config, get_absolute_spotify_repo_path
 from util.gmail import debug_print_and_email_message, email_error
 from util.lastfm import get_lastfm
 from util.debug import debug_print
+from util.playlist import add_tracks_in_batches, get_all_track_uris, is_max_change_count_error, rotate_playlist
 
 def create_data_dir_if_dne(config): # TODO have the daily email dump the filesize
     data_dir_path = get_absolute_spotify_repo_path() + config["ROLLING_SONGS"]["DATA_DIR"]
@@ -111,7 +112,15 @@ def add_tracks_to_log_playlist(config, spotify, log_playlist_id, new_tracks):
         return
     
     track_uris = [ track['uri'] for track in new_tracks ]
-    spotify.user_playlist_add_tracks(config["SPOTIFY_USERNAME"], playlist_id=log_playlist_id, tracks=track_uris)
+    try:
+        add_tracks_in_batches(spotify, log_playlist_id, track_uris)
+    except Exception as e:
+        if not is_max_change_count_error(e):
+            raise
+        # the copy already holds whatever got added before the cap hit
+        new_playlist_id = rotate_playlist(spotify, config["SPOTIFY_USERNAME"], log_playlist_id)
+        already_added = set(get_all_track_uris(spotify, new_playlist_id))
+        add_tracks_in_batches(spotify, new_playlist_id, [ uri for uri in track_uris if uri not in already_added ])
 
 # for each new track, get number of plays at present and store.
 # for each track which was removed from tracklist, get number of plays
