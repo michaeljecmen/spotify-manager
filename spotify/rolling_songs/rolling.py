@@ -1,5 +1,7 @@
 import os
+import sys
 import json
+import traceback
 from pathlib import Path
 
 from spotify.rolling_songs.log import append_to_log
@@ -224,6 +226,8 @@ def update_main():
     try:
         config = read_config()
         update_rolling_data_and_playlist(config)
-    except Exception as e:
+    except Exception:
         # debug_print_and_email_message(config, "error in rolling-songs", str(e))
-        pass
+        # print and exit nonzero so cron's log shows why the run failed
+        traceback.print_exc()
+        sys.exit(1)

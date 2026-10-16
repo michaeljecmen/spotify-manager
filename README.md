@@ -21,7 +21,7 @@ the one stop shop for an upgraded spotify experience
     your sender email address, you'll need to follow [this tutorial](https://wpmailsmtp.com/docs/how-to-set-up-the-other-smtp-mailer-in-wp-mail-smtp/#app-passwords) to generate an app password for this program. when you've generated the app password, use that password (it should be a series of 16 characters) as the ```SENDER_PASSWORD``` value in ```config.json``` instead of your actual email password you use to log in. this is necessary due to increased gmail security as of mid 2022.
     
     to be clear, modify the fields in ```config.json```, not ```example.json```.
-5. for the app you just created on your spotify dev dashboard, add the url ```http://localhost:8888/callback``` to the list of callbacks using the "edit settings" button. this url should match the url in your ```config.json```, so if you edited that for whatever reason be sure to update your callback list on the dashboard to match.
+5. for the app you just created on your spotify dev dashboard, add the url ```http://127.0.0.1:8888/callback``` to the list of callbacks using the "edit settings" button. this url should match the url in your ```config.json```, so if you edited that for whatever reason be sure to update your callback list on the dashboard to match.
 6. run ```cd spotify-manager/```
 7. run the authenticator script with ```python3 -m scripts.auth``` and give the app access to your spotify account when it opens a browser window and yells at you. the program should auto-refresh the token once you generate it for the first time, but if you ever need to reauthenticate the program for some reason re-run this command.
 
